@@ -1,0 +1,35 @@
+== Description
+
+Problems
+1. The ads you include on your website is doing "document.write"
+2. They block your webpage from being rendered nicely -- chunks appear as ads comes in
+
+Solutions
+1. Drop ads, or change ads provider.
+2. Hack "document.write"
+3. Refactor your web page, so that ads are at the bottom & all your content renders before them
+4. Use postload_google_ads plugin to do (3) for you.
+
+== Requirements
+
+In this implementation, jQuery, Hpricot & Rails are required.
+
+== Getting started
+
+Make sure you give your <script> tags for google something identifiable, e.g. <script class="googleads">
+Then configure the necessary controller:
+
+  class ApplicationController < ActionController::Base
+    @@google_ads_cssselector = 'script.googleads' # step 1
+    cattr_accessor :google_ads_cssselector        # step 2
+    after_filter :postload_google_ads             # step 3
+  end
+
+Restart your Rails server and see
+
+== Tips
+
+To prevent ads from shifting your layout, it is best to wrap your google ads <script> tag in something (e.g. div)
+and give it an explicit height width.
+
+Copyright (c) 2009 Chew Choon Keat, released under the MIT license
