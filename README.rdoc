@@ -20,9 +20,10 @@ Make sure you give your <script> tags for google something identifiable, e.g. <s
 Then configure the necessary controller:
 
   class ApplicationController < ActionController::Base
-    @@google_ads_cssselector = 'script.googleads' # step 1
-    cattr_accessor :google_ads_cssselector        # step 2
-    after_filter :postload_google_ads             # step 3
+    include PostloadGoogleAds                     # step 1
+    @@google_ads_cssselector = 'script.googleads' # step 2
+    cattr_accessor :google_ads_cssselector        # step 3
+    after_filter :postload_google_ads             # step 4
   end
 
 Restart your Rails server and see
