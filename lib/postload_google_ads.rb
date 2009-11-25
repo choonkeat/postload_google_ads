@@ -5,6 +5,8 @@ module PostloadGoogleAds
   ADSWRAPPER_CSSCLASS = "postload_google_ads-adswrapper"
   def postload_google_ads
     doc = Hpricot(response.body)
+    # quit if we can't find any ads (ie., if ads are disabled in a development environment)
+    return unless (doc/self.class.google_ads_cssselector).size > 0
     # find all ads <script> and wrap in 2 layers of div (.placeholder > .adswrapper > script)
     (doc/self.class.google_ads_cssselector).wrap("<div class='#{PLACEHOLDER_CSSCLASS}'><div class='#{ADSWRAPPER_CSSCLASS}'></div></div>")
     # remove these <scripts> & .adswrapper from in the tree, leaving behind the outermost .placeholder
